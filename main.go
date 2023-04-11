@@ -1,5 +1,7 @@
 package main
 
+// TODO Better connection to microservice
+
 import (
 	"log"
 	"net"
@@ -19,7 +21,7 @@ func handleConnection(conn net.Conn) {
 	//log.Println(string(request))
 	log.Printf("%T", request)
 
-	service.FinalCompute(request)
+	service.InsertToDB(request)
 
 	response := []byte("hello from golang microservice!")
 
