@@ -3,6 +3,8 @@ package main
 import (
 	"log"
 	"net"
+
+	"github.com/sid-008/CN-project/service"
 )
 
 func handleConnection(conn net.Conn) {
@@ -14,6 +16,10 @@ func handleConnection(conn net.Conn) {
 		return
 	}
 	log.Printf("%d bytes read", n)
+	//log.Println(string(request))
+	log.Printf("%T", request)
+
+	service.FinalCompute(request)
 
 	response := []byte("hello from golang microservice!")
 
@@ -29,6 +35,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	log.Println("Server started on localhost 8000, listening for incoming requests")
 
 	for {
 		conn, err := ln.Accept()

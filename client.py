@@ -5,9 +5,12 @@ client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 addr = ('localhost', 8000)
 
 client_socket.connect(addr)
+print("Connected to server...")
 
-request = b'Hello this is a sample document'
-client_socket.send(request)
+with open('file1.txt', 'r') as file:
+    contents = file.read()
+
+client_socket.sendall(contents.encode())
 
 response = client_socket.recv(1024)
 print(response.decode())

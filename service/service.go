@@ -1,4 +1,4 @@
-package main
+package service
 
 import (
 	"fmt"
@@ -49,16 +49,21 @@ func ComputeTFIDF(doc *Document, docs []*Document, term string) float64 {
 	return tfidf
 }
 
-func main() {
+func FinalCompute(req []uint8) {
 	docs := []*Document{
-		NewDoc("This is a sample document."),
-		NewDoc("Another sample document."),
-		NewDoc("And yet another sample document."),
+		NewDoc(string(req)),
+		NewDoc("Wondering where the quick brown fox had gone, the lazy dog howled at the moon. After the fox had jumped over the lazy dog, the dog let out a bark. The quick brown fox then ran away from the lazy dog and disappeared into the dense forest. The lazy dog was left alone, wondering where the fox had vanished to."),
+		NewDoc("The lazy dog lay in the grass while the quick brown fox leaped over it. After the fox had successfully cleared the dog, the lazy canine let out a bark of surprise. The quick brown fox continued to run away from the dog and disappeared into the thick forest. Meanwhile, the lazy dog howled at the bright moon, puzzled as to where the fox had gone."),
 	}
+
 	for _, doc := range docs {
 		for term := range doc.Terms {
 			tfidf := ComputeTFIDF(doc, docs, term)
-			fmt.Printf("%s %f\n", term, tfidf)
+			if tfidf == 0.0 {
+				continue
+			} else {
+				fmt.Printf("%s %f\n", term, tfidf)
+			}
 		}
 	}
 
